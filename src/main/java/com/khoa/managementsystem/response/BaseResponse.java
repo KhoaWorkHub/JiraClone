@@ -20,18 +20,33 @@ public class BaseResponse {
     private Object data;
 
 
+//
+//    public BaseResponse(Meta meta, Object data) {
+//        this.meta = meta;
+//        this.data = data;
+//    }
+//
+//    public BaseResponse(Meta meta, Integer code, String message) {
+//        this.meta = meta;
+//        this.code = code;
+//        this.data = message;
+//
+//    }
 
     public BaseResponse(Meta meta, Object data) {
         this.meta = meta;
+        this.code = meta.getCode(); // Sử dụng code từ Meta nếu có
         this.data = data;
     }
 
     public BaseResponse(Meta meta, Integer code, String message) {
         this.meta = meta;
-        this.code = code;
+        this.code = (code != null) ? code : meta.getCode(); // Đảm bảo code không bị null
         this.data = message;
-
     }
+
+
+
 
 //    public BaseResponse(Meta meta) {
 //        this.meta = meta;

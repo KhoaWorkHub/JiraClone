@@ -1,18 +1,20 @@
-package com.khoa.managementsystem.model;
+package com.khoa.managementsystem.response;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import jakarta.persistence.*;
+import com.khoa.managementsystem.model.Project;
+import com.khoa.managementsystem.model.User;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-@Entity
 @Data
-public class Issue {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+@NoArgsConstructor
+@AllArgsConstructor
+public class IssueResponse {
+
     private Long id;
 
     private String title;
@@ -30,14 +32,8 @@ public class Issue {
 
     private List<String> tags = new ArrayList<>();
 
-    @ManyToOne
     private User assigned;
 
-    @JsonIgnore
-    @ManyToOne
     private Project project;
 
-    @JsonIgnore
-    @OneToMany(mappedBy = "issue", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Comment> comments = new ArrayList<>();
 }

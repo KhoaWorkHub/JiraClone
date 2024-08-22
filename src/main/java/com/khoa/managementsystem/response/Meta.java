@@ -7,6 +7,8 @@ import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Optional;
+
 @Data
 @NoArgsConstructor
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
@@ -14,16 +16,16 @@ import lombok.NoArgsConstructor;
 public class Meta {
     private String requestId;
 
-    private int code;
+    private Integer code = 200;
 
     private String message;
 
     private String httpCode;
 
 
-    public Meta(String requestId, int code, String message, String httpCode) {
+    public Meta(String requestId, Integer code, String message, String httpCode) {
         this.requestId = requestId;
-        this.code = code;
+        this.code = (code != null) ? code : 200; // Luôn đảm bảo code không bị null
         this.message = message;
         this.httpCode = httpCode;
     }

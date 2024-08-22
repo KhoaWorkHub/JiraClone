@@ -35,7 +35,7 @@ public class UserServiceImpl implements UserService {
     public User findUserByEmail(String email) {
         User user = userRepository.findByEmail(email);
         if(user == null) {
-            throw new BusinessException(ProjectExceptionEnum.USER_NOT_FOUND);
+            throw new BusinessException(ProjectExceptionEnum.valueOf(ProjectExceptionEnum.USERNAME_NOT_FOUND.formatMessage(email)));
         }
         return user;
     }

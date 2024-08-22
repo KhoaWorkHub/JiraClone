@@ -16,9 +16,26 @@ public enum ProjectExceptionEnum {
     USERNAME_NOT_FOUND(1003, "Username not found with email : %s"),
     PASSWORD_NOT_FOUND(1004, "Password not found"),
     USER_NOT_FOUND(1005, "User not found"),
+    USER_NOT_FOUND_WITH_ID(1006, "User not found with id: %s"),
 
     //Todo PROJECT
-    PROJECT_NOT_FOUND(2001, "Project not found");
+    PROJECT_NOT_FOUND(2001, "Project not found"),
+
+    //Todo INVITATION
+    INVITATION_NOT_FOUND(3001, "Invitation not found"),
+
+    //Todo ISSUE
+    ISSUE_NOT_FOUND(4001, "Issue not found: %s"),
+    ISSUE_NOT_FOUND_WITH_ID(4002, "Issue not found with id: %s"),
+
+    //Todo COMMENT
+    COMMENT_NOT_FOUND(5001, "Comment not found"),
+    COMMENT_NOT_FOUND_WITH_ID(5002, "Comment not found with id: %s"),
+    COMMENT_NOT_BELONG_TO_USER(5003, "Comment not belong to user"),
+
+    //Todo CHAT
+    CHAT_NOT_FOUND(6001, "Chat not found");
+
 
 
 

@@ -15,9 +15,19 @@ public class BaseController implements IBaseController {
     @Override
     public ResponseEntity<Object> ok(Object payload) {
         String requestId = UUIDUtil.generateUUID();
-        BaseResponse response = new BaseResponse(new Meta(requestId, 200, "success", HttpStatus.OK.toString()), payload);
+        int responseCode = 200; // Đặt mặc định là 200
+
+        if (payload instanceof BaseResponse) {
+            Meta meta = ((BaseResponse) payload).getMeta();
+            if (meta != null && meta.getCode() != 0) {
+                responseCode = meta.getCode();
+            }
+        }
+
+        BaseResponse response = new BaseResponse(new Meta(requestId, responseCode, "success", HttpStatus.OK.toString()), payload);
         return ResponseEntity.ok(response);
     }
+
 
     @Override
     public ResponseEntity<Object> err(String message, String requestId, ProjectExceptionEnum code) {

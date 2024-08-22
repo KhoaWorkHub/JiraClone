@@ -1,10 +1,13 @@
 package com.khoa.managementsystem.controller.impl;
 
 import com.khoa.managementsystem.controller.IProjectController;
+import com.khoa.managementsystem.model.Invitation;
 import com.khoa.managementsystem.model.Project;
 import com.khoa.managementsystem.model.User;
+import com.khoa.managementsystem.request.InvitationRequest;
 import com.khoa.managementsystem.response.MessageResponse;
 import com.khoa.managementsystem.security.UserPrinciple;
+import com.khoa.managementsystem.service.InvitationService;
 import com.khoa.managementsystem.service.ProjectService;
 import com.khoa.managementsystem.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -19,6 +22,8 @@ public class ProjectController extends BaseController implements IProjectControl
     private final ProjectService projectService;
 
     private final UserService userService;
+
+    private final InvitationService invitationService;
 
     @Override
     public ResponseEntity<Object> getProject( String category, String tag, String jwt) {
@@ -66,5 +71,21 @@ public class ProjectController extends BaseController implements IProjectControl
     public ResponseEntity<Object> getChatByProjectId(Long projectId, String jwt) {
         User user = userService.findUserProfileByJwt(jwt);
         return ok(projectService.getChatByProjectId(projectId));
+    }
+
+    @Override
+    public ResponseEntity<Object> inviteProject(InvitationRequest request, String jwt) {
+        User user = userService.findUserProfileByJwt(jwt);
+        invitationService.sendInvitation(request.getEmail(), request.getProjectId());
+        MessageResponse res = new MessageResponse("Invitation sent successfully");
+        return ok(res);
+    }
+
+    @Override
+    public ResponseEntity<Object> acceptInviteProject(String token, String jwt) {
+        User user = userService.findUserProfileByJwt(jwt);
+        Invitation invitation = invitationService.acceptInvitation(token, user.getId());
+        projectService.addUserToProject(invitation.getProjectId(), user.getId());
+        return ok(invitation);
     }
 }

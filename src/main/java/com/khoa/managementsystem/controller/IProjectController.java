@@ -2,6 +2,7 @@ package com.khoa.managementsystem.controller;
 
 import com.khoa.managementsystem.model.Project;
 
+import com.khoa.managementsystem.request.InvitationRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -46,5 +47,15 @@ public interface IProjectController {
     @GetMapping("/{projectId}/chat")
     ResponseEntity<Object> getChatByProjectId(@PathVariable Long projectId,
                                               @RequestHeader("Authorization") String jwt
+    );
+
+    @PostMapping("/invite")
+    ResponseEntity<Object> inviteProject(@RequestBody InvitationRequest request,
+                                         @RequestHeader("Authorization") String jwt
+    );
+
+    @GetMapping("/accept_invitation")
+    ResponseEntity<Object> acceptInviteProject(@RequestParam String token,
+                                               @RequestHeader("Authorization") String jwt
     );
 }
