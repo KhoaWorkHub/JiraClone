@@ -32,7 +32,7 @@ public class IssueResponse {
 
     private List<String> tags = new ArrayList<>();
 
-    private User assigned;
+    private User assignee;
 
     private Project project;
 

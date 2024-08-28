@@ -12,7 +12,6 @@ import java.util.List;
 
 @Data
 @NoArgsConstructor
-@AllArgsConstructor
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
 public class UserResponse {
 
@@ -26,5 +25,6 @@ public class UserResponse {
 
     private int projectSize; // dòng này để mở thêm nhiều project cho user
 
-    private List<Issue> assignedIssues = new ArrayList<>();
+    private List<Issue> assigneeIssues = new ArrayList<>();
+
 }

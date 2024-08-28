@@ -24,7 +24,6 @@ public interface IProjectController {
 
     @PostMapping("/create")
     ResponseEntity<Object> createProject(@RequestBody Project project,
-                                         @PathVariable Long projectId,
                                          @RequestHeader("Authorization") String jwt
     );
 

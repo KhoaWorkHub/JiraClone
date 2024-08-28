@@ -22,19 +22,13 @@ import java.util.List;
 
 public class JwtTokenValidator extends OncePerRequestFilter {
 
-
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response,
                                     FilterChain filterChain) throws ServletException, IOException {
 
-        String jwt = request.getHeader(JwtConstant.JWT_HEADER);
-        // Cách truyền thống truyền jwt vào mỗi header r gửi vào tug con api controller
-
-//        String jwt = getJwtFromRequest(request);
+        String jwt = getJwtFromRequest(request);
 
         if (jwt != null) {
-            jwt = jwt.substring(7);
-
             try {
                 SecretKey key = Keys.hmacShaKeyFor(JwtConstant.SECRET_KEY.getBytes());
                 Claims claims = Jwts.parser()
@@ -51,7 +45,7 @@ public class JwtTokenValidator extends OncePerRequestFilter {
                 SecurityContextHolder.getContext().setAuthentication(authentication);
 
             } catch (Exception e) {
-                throw new BadCredentialsException("Invalid token");
+                throw new BadCredentialsException("Invalid token", e);
             }
         }
         filterChain.doFilter(request, response);
@@ -60,7 +54,7 @@ public class JwtTokenValidator extends OncePerRequestFilter {
     private String getJwtFromRequest(HttpServletRequest request) {
         String bearerToken = request.getHeader("Authorization");
         if (StringUtils.hasText(bearerToken) && bearerToken.startsWith("Bearer ")) {
-            return bearerToken.substring(7, bearerToken.length());
+            return bearerToken.substring(7);
         }
         return null;
     }

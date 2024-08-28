@@ -25,7 +25,7 @@ public enum ProjectExceptionEnum {
     INVITATION_NOT_FOUND(3001, "Invitation not found"),
 
     //Todo ISSUE
-    ISSUE_NOT_FOUND(4001, "Issue not found: %s"),
+    ISSUE_NOT_FOUND(4001, "Issue not found"),
     ISSUE_NOT_FOUND_WITH_ID(4002, "Issue not found with id: %s"),
 
     //Todo COMMENT

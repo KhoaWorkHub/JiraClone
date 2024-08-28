@@ -31,7 +31,7 @@ public class Issue {
     private List<String> tags = new ArrayList<>();
 
     @ManyToOne
-    private User assigned;
+    private User assignee;
 
     @JsonIgnore
     @ManyToOne

@@ -20,33 +20,36 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class ProjectServiceImpl implements ProjectService {
 
+
     private final ProjectRepository projectRepository;
 
+
     private final UserService userService;
+
 
     private final ChatService chatService;
 
     @Override
     public Project createProject(Project project, User user) {
-
         Project createdProject = new Project();
 
         createdProject.setOwner(user);
         createdProject.setTags(project.getTags());
+        createdProject.setName(project.getName());
         createdProject.setCategory(project.getCategory());
         createdProject.setDescription(project.getDescription());
         createdProject.getTeam().add(user);
 
-        projectRepository.save(project);
-
+        createdProject = projectRepository.save(createdProject);
 
         Chat chat = new Chat();
         chat.setProject(createdProject);
         chatService.createChat(chat);
         createdProject.setChat(chat);
 
-        return createdProject;
+        return projectRepository.save(createdProject);
     }
+
 
 @Override
 public List<Project> getProjectByTeam(String category, String tag, User user) {

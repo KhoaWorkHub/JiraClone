@@ -26,7 +26,7 @@ public interface IIssueController {
 
     );
 
-    @PutMapping("/{issueId}/assigned/{userId}")
+    @PutMapping("/{issueId}/assignee/{userId}")
     ResponseEntity<Object> addUserToIssue(@PathVariable Long issueId,
                                           @PathVariable Long userId
 //                                          @RequestHeader("Authorization") String jwt

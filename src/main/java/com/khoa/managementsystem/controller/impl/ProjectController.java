@@ -11,6 +11,7 @@ import com.khoa.managementsystem.service.InvitationService;
 import com.khoa.managementsystem.service.ProjectService;
 import com.khoa.managementsystem.service.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -40,10 +41,12 @@ public class ProjectController extends BaseController implements IProjectControl
     }
 
     @Override
-    public ResponseEntity<Object> createProject(Project project, Long projectId, String jwt) {
+    public ResponseEntity<Object> createProject(Project project, String jwt) {
         User user = userService.findUserProfileByJwt(jwt);
         Project createdProject = projectService.createProject(project, user);
         return ResponseEntity.ok(createdProject);
+//        return new ResponseEntity<>(createdProject, HttpStatus.CREATED);
+
     }
 
     @Override

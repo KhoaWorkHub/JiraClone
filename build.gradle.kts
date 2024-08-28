@@ -34,7 +34,7 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-mail:3.3.2")
     implementation("com.razorpay:razorpay-java:1.4.6")
     implementation("org.json:json:20240303")
-
+    implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.0.2")
     compileOnly("org.projectlombok:lombok")
     developmentOnly("org.springframework.boot:spring-boot-devtools")
     runtimeOnly("com.mysql:mysql-connector-j")

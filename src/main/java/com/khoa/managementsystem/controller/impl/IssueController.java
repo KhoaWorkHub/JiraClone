@@ -7,7 +7,6 @@ import com.khoa.managementsystem.exception.ProjectExceptionEnum;
 import com.khoa.managementsystem.model.Issue;
 import com.khoa.managementsystem.model.User;
 import com.khoa.managementsystem.request.IssueRequest;
-import com.khoa.managementsystem.response.AuthResponse;
 import com.khoa.managementsystem.response.IssueResponse;
 import com.khoa.managementsystem.response.MessageResponse;
 import com.khoa.managementsystem.service.IssueService;
@@ -53,7 +52,7 @@ public class IssueController extends BaseController implements IIssueController 
             issueResponse.setProjectID(createdIssue.getProjectID());
             issueResponse.setProject(createdIssue.getProject());
             issueResponse.setTags(createdIssue.getTags());
-            issueResponse.setAssigned(createdIssue.getAssigned());
+            issueResponse.setAssignee(createdIssue.getAssignee());
 
             return ok(issueResponse);
 

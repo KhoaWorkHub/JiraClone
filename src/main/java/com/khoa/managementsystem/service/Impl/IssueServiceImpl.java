@@ -30,7 +30,7 @@ public class IssueServiceImpl implements IssueService {
     public Issue getIssueById(Long issueId) {
         Optional<Issue> issue = issueRepository.findById(issueId);
         if (!issue.isPresent()) {
-            throw new BusinessException(ProjectExceptionEnum.valueOf(ProjectExceptionEnum.ISSUE_NOT_FOUND.formatMessage(issueId)));
+            throw new BusinessException(ProjectExceptionEnum.ISSUE_NOT_FOUND);
         }
         return issue.get();
     }
@@ -68,7 +68,7 @@ public class IssueServiceImpl implements IssueService {
         User user = userService.findUserById(userId);
         Issue issue = getIssueById(issueId);
 
-        issue.setAssigned(user);
+        issue.setAssignee(user);
         return issueRepository.save(issue);
     }
 
