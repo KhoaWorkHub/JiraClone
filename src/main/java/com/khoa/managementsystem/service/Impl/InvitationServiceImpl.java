@@ -26,7 +26,11 @@ public class InvitationServiceImpl implements InvitationService {
 
         Invitation invitation = new Invitation();
         invitation.setEmail(email);
-        invitation.setProjectId(projectId);
+        if (projectId != null) {
+            invitation.setProjectId(projectId);
+        } else {
+            throw new BusinessException(ProjectExceptionEnum.PROJECT_ID_NOT_FOUND);
+        }
         invitation.setToken(invitationToken);
 
         invitationRepository.save(invitation);
@@ -38,11 +42,27 @@ public class InvitationServiceImpl implements InvitationService {
 
     @Override
     public Invitation acceptInvitation(String token, Long userId) {
+        if (userId == null) {
+            throw new BusinessException(ProjectExceptionEnum.USER_NOT_FOUND_WITH_ID);
+        }
 
         Invitation invitation = invitationRepository.findByToken(token);
-        if(invitation == null){
+
+        // Log the retrieved invitation
+        System.out.println("Retrieved invitation: " + invitation);
+
+        if (invitation == null) {
             throw new BusinessException(ProjectExceptionEnum.INVITATION_NOT_FOUND);
         }
+
+        // Log the projectId
+        System.out.println("Retrieved projectId: " + invitation.getProjectId());
+
+        // Check if projectId is null
+        if (invitation.getProjectId() == null) {
+            throw new BusinessException(ProjectExceptionEnum.PROJECT_ID_NOT_FOUND);
+        }
+
         return invitation;
     }
 

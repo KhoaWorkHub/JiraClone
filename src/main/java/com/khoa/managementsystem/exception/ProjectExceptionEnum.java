@@ -17,9 +17,10 @@ public enum ProjectExceptionEnum {
     PASSWORD_NOT_FOUND(1004, "Password not found"),
     USER_NOT_FOUND(1005, "User not found"),
     USER_NOT_FOUND_WITH_ID(1006, "User not found with id: %s"),
-
+    USER_ALREADY_IN_PROJECT(1007, "User already in project"),
     //Todo PROJECT
     PROJECT_NOT_FOUND(2001, "Project not found"),
+    PROJECT_ID_NOT_FOUND(2002, "ProjectId not found"),
 
     //Todo INVITATION
     INVITATION_NOT_FOUND(3001, "Invitation not found"),

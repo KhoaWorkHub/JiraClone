@@ -91,11 +91,13 @@ public List<Project> getProjectByTeam(String category, String tag, User user) {
     public void addUserToProject(Long projectId, Long userId) {
         Project project = getProjectById(projectId);
         User user = userService.findUserById(userId);
-        if(!project.getTeam().contains(user)){
-            project.getChat().getUsers().add(user);
-            project.getTeam().add(user);
-
+        for(User team : project.getTeam()){
+            if(team.getId().equals(userId)){
+                throw new BusinessException(ProjectExceptionEnum.USER_ALREADY_IN_PROJECT);
+            }
         }
+        project.getChat().getUsers().add(user);
+        project.getTeam().add(user);
         projectRepository.save(project);
 
     }

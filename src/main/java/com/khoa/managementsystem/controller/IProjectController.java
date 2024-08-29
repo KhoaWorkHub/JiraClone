@@ -53,7 +53,7 @@ public interface IProjectController {
                                          @RequestHeader("Authorization") String jwt
     );
 
-    @GetMapping("/accept_invitation")
+    @PostMapping("/accept_invitation")
     ResponseEntity<Object> acceptInviteProject(@RequestParam String token,
                                                @RequestHeader("Authorization") String jwt
     );

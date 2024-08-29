@@ -13,6 +13,9 @@ import com.khoa.managementsystem.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestHeader;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 
@@ -84,11 +87,52 @@ public class ProjectController extends BaseController implements IProjectControl
         return ok(res);
     }
 
+    // @Override
+    // public ResponseEntity<Object> acceptInviteProject(String token, String jwt) {
+    //     User user = userService.findUserProfileByJwt(jwt);
+    //     Invitation invitation = invitationService.acceptInvitation(token, user.getId());
+    //     System.out.println("Received token: " + token + ", userId: " + user.getId());
+    //     projectService.addUserToProject(invitation.getProjectId(), user.getId());
+    //     return ok(invitation);
+    // }
+
     @Override
-    public ResponseEntity<Object> acceptInviteProject(String token, String jwt) {
+    public ResponseEntity<Object> acceptInviteProject(@RequestParam String token,
+                                                      @RequestHeader("Authorization") String jwt) {
         User user = userService.findUserProfileByJwt(jwt);
-        Invitation invitation = invitationService.acceptInvitation(token, user.getId());
-        projectService.addUserToProject(invitation.getProjectId(), user.getId());
-        return ok(invitation);
+
+        if (user == null) {
+            System.err.println("User not found for the provided JWT: " + jwt);
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("User not found");
+        }
+
+        Long userId = user.getId();
+        System.out.println("Received token: " + token + ", userId: " + userId);
+
+        if (userId == null) {
+            System.err.println("User ID is null for the user: " + user);
+            return ResponseEntity.badRequest().body("User ID must not be null");
+        }
+
+        Invitation invitation = invitationService.acceptInvitation(token, userId);
+
+        // Log the invitation object
+        System.out.println("Invitation object: " + invitation);
+
+        if (invitation == null) {
+            System.err.println("Invitation is null for token: " + token);
+            return ResponseEntity.badRequest().body("Invitation not found");
+        }
+
+        Long projectId = invitation.getProjectId();
+        System.out.println("Invitation projectId: " + projectId);
+
+        if (projectId == null) {
+            System.err.println("Project ID is null for invitation: " + invitation);
+            return ResponseEntity.badRequest().body("Project ID must not be null");
+        }
+
+        projectService.addUserToProject(projectId, userId);
+        return ResponseEntity.ok(invitation);
     }
 }
